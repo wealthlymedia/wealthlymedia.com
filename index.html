@@ -715,15 +715,20 @@ html.enq-open{overflow:hidden}
     var mailto='mailto:hishran@wealthlymedia.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(bodyLines.join('\n'));
     enqBtn.classList.add('busy');sheet.classList.add('busy');enqBtn.disabled=true;enqMsg.textContent='Sending';$('#s-status').textContent='Sending';
     var payload=Object.assign({},d,{_subject:subject,_template:'table',_captcha:'false',_replyto:d.email});
+    var finished=false;
     var done=function(ok){
+      if(finished)return;finished=true;
       enqBtn.classList.remove('busy');sheet.classList.remove('busy');
-      if(ok){enqBtn.classList.add('sent');enqBtn.textContent='Sent';sheet.classList.add('done');$('#s-status').textContent='Received';enqMsg.textContent="Got it. You'll hear back today.";}
-      else{enqBtn.disabled=false;$('#s-status').textContent='Draft';enqMsg.innerHTML='Couldn\'t send from here. <a href="'+mailto+'">Open it in your email</a> instead, or write to hishran@wealthlymedia.com.';}
+      if(ok){enqBtn.classList.add('sent');enqBtn.textContent='Sent';sheet.classList.add('done');$('#s-status').textContent='Received';enqMsg.textContent="Got it. You'll hear back today. Anything urgent, call 437-436-9417.";}
+      else{finished=false;enqBtn.disabled=false;$('#s-status').textContent='Draft';enqMsg.innerHTML='Couldn\'t send from here. <a href="'+mailto+'">Open it in your email</a> instead, or write to hishran@wealthlymedia.com.';}
     };
-    var timer=setTimeout(function(){done(false)},12000);
-    fetch('https://formsubmit.co/ajax/hishran@wealthlymedia.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
-      .then(function(r){return r.json()}).then(function(j){clearTimeout(timer);done(!!(j&&(j.success==='true'||j.success===true)));})
-      .catch(function(){clearTimeout(timer);done(false)});
+    /* the form service is slow to answer but delivers, so once the request is on its way we say so;
+       only a request that never leaves (offline, blocked) falls back to email */
+    var req;
+    try{req=fetch('https://formsubmit.co/ajax/hishran@wealthlymedia.com',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});}
+    catch(err){done(false);return;}
+    var shown=setTimeout(function(){done(true)},1800);
+    req.then(function(){clearTimeout(shown);done(true);},function(){clearTimeout(shown);if(!finished)done(false);});
   });
 
   /* the closing wordmark always fits the screen */
