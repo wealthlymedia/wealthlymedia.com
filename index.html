@@ -692,7 +692,7 @@ html.enq-open{overflow:hidden}
   /* the call sheet fills in as you type */
   var sd=new Date();$('#s-date').textContent=sd.toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'});
   function hot(el){el.classList.add('hot');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('hot')},600);}
-  function fill(){
+  function fillSheet(){
     var v=function(id){return ($('#'+id).value||'').trim()};
     var name=v('f-name'),co=v('f-company'),em=v('f-email'),ph=v('f-phone'),city=v('f-city'),pk=$('#f-package').value,br=v('f-brief');
     var set=function(id,val,dflt){var el=$('#'+id);var nv=val||dflt;el.classList.toggle('set',!!val);if(el.textContent!==nv){el.textContent=nv;hot(el);}};
@@ -702,7 +702,7 @@ html.enq-open{overflow:hidden}
     set('s-package',pk,'To be decided');
     set('s-brief',br,"What's coming up, in your words.");
   }
-  $$('#enqform input, #enqform select, #enqform textarea').forEach(function(f){f.addEventListener('input',fill);f.addEventListener('change',fill);f.addEventListener('input',function(){f.closest('.fld')&&f.closest('.fld').classList.remove('bad')});});
+  $$('#enqform input, #enqform select, #enqform textarea').forEach(function(f){f.addEventListener('input',fillSheet);f.addEventListener('change',fillSheet);f.addEventListener('input',function(){f.closest('.fld')&&f.closest('.fld').classList.remove('bad')});});
   enqForm.addEventListener('submit',function(e){
     e.preventDefault();
     var bad=false;
