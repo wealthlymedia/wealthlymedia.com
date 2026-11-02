@@ -102,7 +102,10 @@ html.fine .cur{opacity:1}
 html.loading{overflow:hidden}
 
 /* top bar + menu */
-.top{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:60;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));transition:transform .7s var(--ease);mix-blend-mode:difference;color:#fff}
+.top{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:60;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));transition:transform .7s var(--ease),color .4s;color:var(--ivory)}
+.top.inv{color:var(--ink)}
+.top.inv .nav a{opacity:.8}
+html.enq-open .top{transform:translateY(-110%)}
 @media (min-width:900px){.top{padding-left:max(56px,env(safe-area-inset-left,0px));padding-right:max(56px,env(safe-area-inset-right,0px))}}
 .top.hide{transform:translateY(-110%)}
 .top .bar{max-width:var(--wrap);margin:0 auto;height:78px;display:flex;align-items:center;justify-content:space-between}
@@ -295,19 +298,28 @@ html.loading{overflow:hidden}
 .btn.sent::before{transform:none}
 #enqmsg{color:var(--muted);max-width:48ch;line-height:1.6}
 #enqmsg a{color:var(--gold-light)}
-.sheet{position:relative;background:var(--ivory);color:var(--ink);padding:clamp(22px,2.6vw,34px);font:400 12px/1.6 var(--mono);letter-spacing:.06em;box-shadow:0 30px 80px rgba(0,0,0,.45);transform:rotate(-.6deg);overflow:hidden}
-.sheet-head{display:flex;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid rgba(22,19,16,.25);text-transform:uppercase;letter-spacing:.2em;font-weight:500}
-.sheet dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;padding:18px 0}
-.sheet dl>div{min-width:0}
-.sheet dl .wide{grid-column:1 / -1}
-.sheet dt{text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:rgba(22,19,16,.55)}
-.sheet dd{margin:4px 0 0;font:400 clamp(17px,1.4vw,21px)/1.3 var(--display);color:var(--ink);overflow-wrap:anywhere;transition:color .3s}
-.sheet dd.hot{color:var(--gold-deep)}
-.sheet .wide dd{font-size:clamp(16px,1.25vw,19px);line-height:1.4;white-space:pre-wrap}
-.sheet-foot{display:flex;justify-content:space-between;gap:12px;padding-top:14px;border-top:1px solid rgba(22,19,16,.25);font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:rgba(22,19,16,.6);flex-wrap:wrap}
-.stamp{position:absolute;right:22px;top:46%;padding:10px 16px;border:2px solid var(--gold-deep);color:var(--gold-deep);font:500 13px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;transform:rotate(-14deg) scale(1.6);opacity:0;transition:transform .5s cubic-bezier(.2,.9,.3,1.3),opacity .3s}
-.sheet.done .stamp{opacity:1;transform:rotate(-14deg) scale(1)}
-@media (max-width:900px){.enq-grid{grid-template-columns:1fr;gap:40px}.enq .f2{grid-template-columns:1fr;gap:0}.sheet{transform:none}}
+.sheet{position:relative;background:var(--ink-2);color:var(--ivory);border:1px solid var(--line);font:400 12px/1.6 var(--mono);letter-spacing:.06em;overflow:hidden;isolation:isolate}
+.sheet::before{content:"";position:absolute;inset:-30%;z-index:-1;background:radial-gradient(42% 38% at 82% 8%,rgba(186,150,89,.22),transparent 70%)}
+.sheet .cm{position:absolute;width:18px;height:18px;border:0 solid var(--gold);opacity:.9;z-index:2}
+.sheet .cm.tl{top:10px;left:10px;border-top-width:1px;border-left-width:1px}.sheet .cm.tr{top:10px;right:10px;border-top-width:1px;border-right-width:1px}.sheet .cm.bl{bottom:10px;left:10px;border-bottom-width:1px;border-left-width:1px}.sheet .cm.br{bottom:10px;right:10px;border-bottom-width:1px;border-right-width:1px}
+.sheet .clap{height:14px;margin:1px;background:repeating-linear-gradient(-55deg,var(--gold) 0 14px,transparent 14px 30px);opacity:.85}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 26px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.22em;font-size:10.5px;color:var(--muted)}
+.sheet .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gold);color:var(--gold-light);padding:7px 11px;font-size:10px;letter-spacing:.22em;flex:none}
+.sheet .chip b{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.sheet.busy .chip b{animation:blink 1s steps(1) infinite}
+.sheet dl{margin:0;display:grid;grid-template-columns:1fr 1fr}
+.sheet dl>div{min-width:0;padding:18px 26px 20px;border-bottom:1px solid var(--line)}
+.sheet dl>div:nth-child(odd){border-right:1px solid var(--line)}
+.sheet dl .wide{grid-column:1 / -1;border-right:0}
+.sheet dt{text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--muted)}
+.sheet dd{margin:8px 0 0;font:400 clamp(19px,1.5vw,24px)/1.25 var(--display);color:rgba(235,232,225,.42);overflow-wrap:anywhere;transition:color .35s}
+.sheet dd.set{color:var(--ivory)}
+.sheet dd.hot{color:var(--gold-light)}
+.sheet .wide dd{font-size:clamp(17px,1.3vw,21px);line-height:1.4;white-space:pre-wrap;min-height:2.8em}
+.sheet-foot{display:flex;justify-content:space-between;gap:12px;padding:14px 26px 16px;font-size:10px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);flex-wrap:wrap}
+.stamp{position:absolute;right:26px;top:44%;padding:10px 16px;border:1px solid var(--gold-light);color:var(--gold-light);background:rgba(11,10,8,.6);font:500 12px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;transform:rotate(-12deg) scale(1.6);opacity:0;transition:transform .5s cubic-bezier(.2,.9,.3,1.3),opacity .3s;z-index:3}
+.sheet.done .stamp{opacity:1;transform:rotate(-12deg) scale(1)}
+@media (max-width:900px){.enq-grid{grid-template-columns:1fr;gap:40px}.enq .f2{grid-template-columns:1fr;gap:0}}
 html.enq-open{overflow:hidden}
 
 /* reveal states: only once the script is in charge; a timer shows everything regardless */
@@ -518,7 +530,9 @@ html.enq-open{overflow:hidden}
         </div>
       </form>
       <aside class="sheet" aria-live="polite">
-        <div class="sheet-head"><span>Call sheet</span><span id="s-status">Draft</span></div>
+        <i class="cm tl"></i><i class="cm tr"></i><i class="cm bl"></i><i class="cm br"></i>
+        <div class="clap" aria-hidden="true"></div>
+        <div class="sheet-head"><span>Call sheet · Scene 01 · Take 01</span><span class="chip"><b></b><span id="s-status">Draft</span></span></div>
         <dl>
           <div><dt>Production</dt><dd id="s-company">Your company</dd></div>
           <div><dt>Contact</dt><dd id="s-contact">Your name</dd></div>
@@ -681,7 +695,7 @@ html.enq-open{overflow:hidden}
   function fill(){
     var v=function(id){return ($('#'+id).value||'').trim()};
     var name=v('f-name'),co=v('f-company'),em=v('f-email'),ph=v('f-phone'),city=v('f-city'),pk=$('#f-package').value,br=v('f-brief');
-    var set=function(id,val,dflt){var el=$('#'+id);var nv=val||dflt;if(el.textContent!==nv){el.textContent=nv;hot(el);}};
+    var set=function(id,val,dflt){var el=$('#'+id);var nv=val||dflt;el.classList.toggle('set',!!val);if(el.textContent!==nv){el.textContent=nv;hot(el);}};
     set('s-company',co,'Your company');
     set('s-contact',[name,em,ph].filter(Boolean).join(' · '),'Your name');
     set('s-city',city,'Your place');
@@ -699,10 +713,10 @@ html.enq-open{overflow:hidden}
     var subject='Enquiry from '+(d.company||d.name)+(d.package?' · '+d.package:'');
     var bodyLines=['Name: '+d.name,'Company: '+d.company,'Email: '+d.email,'Phone: '+(d.phone||''),'Where: '+(d.city||''),'What fits: '+(d.package||'Not sure yet'),'','What is coming up:',d.brief];
     var mailto='mailto:hishran@wealthlymedia.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(bodyLines.join('\n'));
-    enqBtn.classList.add('busy');enqBtn.disabled=true;enqMsg.textContent='Sending';$('#s-status').textContent='Sending';
+    enqBtn.classList.add('busy');sheet.classList.add('busy');enqBtn.disabled=true;enqMsg.textContent='Sending';$('#s-status').textContent='Sending';
     var payload=Object.assign({},d,{_subject:subject,_template:'table',_captcha:'false',_replyto:d.email});
     var done=function(ok){
-      enqBtn.classList.remove('busy');
+      enqBtn.classList.remove('busy');sheet.classList.remove('busy');
       if(ok){enqBtn.classList.add('sent');enqBtn.textContent='Sent';sheet.classList.add('done');$('#s-status').textContent='Received';enqMsg.textContent="Got it. You'll hear back today.";}
       else{enqBtn.disabled=false;$('#s-status').textContent='Draft';enqMsg.innerHTML='Couldn\'t send from here. <a href="'+mailto+'">Open it in your email</a> instead, or write to hishran@wealthlymedia.com.';}
     };
@@ -719,8 +733,8 @@ html.enq-open{overflow:hidden}
 
   /* top bar hides on the way down */
   var bar=$('#topbar'),lastY=0;
-  function onScroll(){var y=window.scrollY||0;if(y>lastY&&y>160)bar.classList.add('hide');else bar.classList.remove('hide');lastY=y;}
-  window.addEventListener('scroll',onScroll,{passive:true});
+  function onScroll(){var y=window.scrollY||0;if(y>lastY&&y>160)bar.classList.add('hide');else bar.classList.remove('hide');lastY=y;try{var under=document.elementsFromPoint(Math.floor(innerWidth/2),40);var light=under.some(function(el){return el.classList&&el.classList.contains('light')&&!el.closest('.enq')});bar.classList.toggle('inv',light);}catch(e){}}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 
   /* programme accordion + hover preview */
   var pv=$('#preview'),pvt=$('#pvt'),pvx=0,pvy=0,tx=0,ty=0,pvOn=false;
