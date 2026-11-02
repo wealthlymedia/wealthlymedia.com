@@ -83,11 +83,14 @@ html.fine .cur{opacity:1}
 .cur.hov .ring{transform:scale(1.7);border-color:rgba(216,191,138,.35);background:rgba(216,191,138,.06)}
 
 /* preloader: a title card that counts in, then lifts like a curtain; it leaves on its own even without script */
-.pre{position:fixed;inset:0;z-index:90;background:var(--bg);color:var(--ivory);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(24px,4vw,48px);animation:preout 1s cubic-bezier(.76,0,.24,1) 4.2s both;will-change:transform}
+.pre{position:fixed;inset:0;z-index:90;background:var(--bg);color:var(--ivory);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(24px,4vw,48px);animation:preout 1s cubic-bezier(.76,0,.24,1) 4.6s both;will-change:transform;--r:0px}
+.pre.iris{-webkit-mask-image:radial-gradient(circle at 50% 50%,transparent calc(var(--r) - 1px),#000 var(--r));mask-image:radial-gradient(circle at 50% 50%,transparent calc(var(--r) - 1px),#000 var(--r))}
+.pre-mark{position:absolute;left:50%;top:50%;width:116px;height:116px;margin:-58px 0 0 -58px;will-change:transform;transform-origin:center}
 .pre::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);opacity:.6}
 .pre-top,.pre-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
-.pre-mid{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px}
-.pre-word{font-size:clamp(56px,11vw,168px);line-height:.9;letter-spacing:-.03em}
+.pre-mid{position:absolute;inset:0;pointer-events:none}
+.pre-words{position:absolute;left:0;right:0;top:calc(50% + 74px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:0 24px}
+.pre-word{font-size:clamp(48px,9vw,140px);line-height:.9;letter-spacing:-.03em}
 .pre-word em{color:var(--gold-light)}
 .pre-sub{opacity:.7}
 .pre .n{font:400 clamp(64px,10vw,140px)/.8 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
@@ -196,7 +199,7 @@ html.loading{overflow:hidden}
 /* who: pinned horizontal run */
 .who{position:relative;overflow:hidden}
 .who .stage{display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,4vw,56px);padding-block:clamp(72px,9vw,120px)}
-@media (min-width:960px){.who .stage{height:100vh;padding-block:0}}
+@media (min-width:960px){.who .stage{height:100vh;padding-block:0;gap:28px}.who .head h2{font-size:clamp(40px,4.4vw,68px)}.who .head{margin-bottom:0}.panel{height:clamp(340px,calc(100vh - 300px),600px);min-height:0}}
 .who .head{margin-bottom:0}
 .rail{display:flex;gap:22px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));will-change:transform}
 @media (min-width:900px){.rail{padding-left:max(56px,env(safe-area-inset-left,0px));padding-right:max(56px,env(safe-area-inset-right,0px))}}
@@ -256,6 +259,56 @@ html.loading{overflow:hidden}
 .foot .brand{color:var(--ivory)}
 .foot .brand .mk{width:26px;height:26px}
 
+/* enquiry page */
+.enq{position:fixed;inset:0;z-index:58;background:var(--ink);color:var(--ivory);overflow:auto;visibility:hidden;clip-path:inset(50% 0 50% 0);transition:clip-path 1s cubic-bezier(.76,0,.24,1),visibility 0s 1s;-webkit-overflow-scrolling:touch}
+.enq.open{visibility:visible;clip-path:inset(0 0 0 0);transition:clip-path 1s cubic-bezier(.76,0,.24,1)}
+.enq .cm{position:fixed;width:22px;height:22px;border:0 solid var(--gold);opacity:0;transition:opacity .6s .6s}
+.enq.open .cm{opacity:.9}
+.enq .cm.tl{top:calc(env(safe-area-inset-top,0px) + 18px);left:18px;border-top-width:1px;border-left-width:1px}.enq .cm.tr{top:calc(env(safe-area-inset-top,0px) + 18px);right:18px;border-top-width:1px;border-right-width:1px}.enq .cm.bl{bottom:18px;left:18px;border-bottom-width:1px;border-left-width:1px}.enq .cm.br{bottom:18px;right:18px;border-bottom-width:1px;border-right-width:1px}
+.enq-in{max-width:var(--wrap);margin:0 auto;padding:clamp(24px,4vw,56px) max(24px,env(safe-area-inset-right,0px)) clamp(48px,6vw,96px) max(24px,env(safe-area-inset-left,0px));min-height:100%}
+@media (min-width:900px){.enq-in{padding-left:max(56px,env(safe-area-inset-left,0px));padding-right:max(56px,env(safe-area-inset-right,0px))}}
+.enq-top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:env(safe-area-inset-top,0px)}
+.enq-x{appearance:none;background:none;border:1px solid var(--line);color:var(--ivory);font:500 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;padding:12px 18px;cursor:pointer;transition:border-color .3s,color .3s}
+.enq-x:hover{border-color:var(--gold);color:var(--gold-light)}
+.enq-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:56px 80px;align-items:start;margin-top:clamp(32px,5vw,72px)}
+.enq-form h2{font-size:clamp(42px,5.6vw,84px)}
+.enq-form .lede{margin-top:18px;max-width:46ch}
+.enq .f2{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+.fld{display:block;position:relative;margin-top:30px;border-bottom:1px solid var(--line);padding-bottom:12px;transition:border-color .4s}
+.fld:focus-within{border-color:var(--gold)}
+.fld .mono{display:block;color:var(--muted);margin-bottom:8px;transition:color .3s}
+.fld:focus-within .mono{color:var(--gold-light)}
+.fld input,.fld select,.fld textarea{width:100%;background:transparent;border:0;outline:0;color:var(--ivory);font:300 clamp(20px,1.8vw,26px)/1.3 var(--display);padding:4px 0;border-radius:0;-webkit-appearance:none;appearance:none}
+.fld textarea{resize:vertical;min-height:96px;font-size:clamp(19px,1.6vw,24px)}
+.fld select{cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 14px) 50%,calc(100% - 8px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:32px}
+.fld select option{background:var(--ink);color:var(--ivory);font-size:16px}
+.fld ::placeholder{color:rgba(235,232,225,.3)}
+.fld.bad{border-color:#b55a4a}
+.enq-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:40px}
+.btn.rec{gap:14px}
+.btn .ring{width:12px;height:12px;border-radius:50%;border:1px solid var(--gold);position:relative;flex:none}
+.btn .ring::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--gold);transform:scale(0);transition:transform .4s var(--ease)}
+.btn:hover .ring::after,.btn.busy .ring::after{transform:scale(1)}
+.btn.busy .ring{animation:blink 1s steps(1) infinite}
+.btn.sent{border-color:var(--gold);color:var(--bg)}
+.btn.sent::before{transform:none}
+#enqmsg{color:var(--muted);max-width:48ch;line-height:1.6}
+#enqmsg a{color:var(--gold-light)}
+.sheet{position:relative;background:var(--ivory);color:var(--ink);padding:clamp(22px,2.6vw,34px);font:400 12px/1.6 var(--mono);letter-spacing:.06em;box-shadow:0 30px 80px rgba(0,0,0,.45);transform:rotate(-.6deg);overflow:hidden}
+.sheet-head{display:flex;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid rgba(22,19,16,.25);text-transform:uppercase;letter-spacing:.2em;font-weight:500}
+.sheet dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;padding:18px 0}
+.sheet dl>div{min-width:0}
+.sheet dl .wide{grid-column:1 / -1}
+.sheet dt{text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:rgba(22,19,16,.55)}
+.sheet dd{margin:4px 0 0;font:400 clamp(17px,1.4vw,21px)/1.3 var(--display);color:var(--ink);overflow-wrap:anywhere;transition:color .3s}
+.sheet dd.hot{color:var(--gold-deep)}
+.sheet .wide dd{font-size:clamp(16px,1.25vw,19px);line-height:1.4;white-space:pre-wrap}
+.sheet-foot{display:flex;justify-content:space-between;gap:12px;padding-top:14px;border-top:1px solid rgba(22,19,16,.25);font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:rgba(22,19,16,.6);flex-wrap:wrap}
+.stamp{position:absolute;right:22px;top:46%;padding:10px 16px;border:2px solid var(--gold-deep);color:var(--gold-deep);font:500 13px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;transform:rotate(-14deg) scale(1.6);opacity:0;transition:transform .5s cubic-bezier(.2,.9,.3,1.3),opacity .3s}
+.sheet.done .stamp{opacity:1;transform:rotate(-14deg) scale(1)}
+@media (max-width:900px){.enq-grid{grid-template-columns:1fr;gap:40px}.enq .f2{grid-template-columns:1fr;gap:0}.sheet{transform:none}}
+html.enq-open{overflow:hidden}
+
 /* reveal states: only once the script is in charge; a timer shows everything regardless */
 .js [data-rv]{opacity:0;transform:translateY(34px)}
 .js .w>i{transform:translateY(112%) rotate(5deg)}
@@ -274,7 +327,7 @@ html.loading{overflow:hidden}
 
 <div class="pre" id="pre" aria-hidden="true">
   <div class="pre-top"><span class="mono">Wealthly Media · Richmond Hill, Ontario</span><span class="mono" id="preline">Loading the set</span></div>
-  <div class="pre-mid"><div class="pre-word display"><span class="w"><i>Wealthly</i></span> <span class="w"><i><em>Media</em></i></span></div><div class="pre-sub mono">Video production · filmed on location</div></div>
+  <div class="pre-mid"><i class="mk pre-mark" id="premark"></i><div class="pre-words"><div class="pre-word display"><span class="w"><i>Wealthly</i></span> <span class="w"><i><em>Media</em></i></span></div><div class="pre-sub mono">Video production · filmed on location</div></div></div>
   <div class="pre-bot"><div class="bar"><i id="prebar"></i></div><div class="pre-row"><span class="mono">00:00:00:00 · 24 fps</span><div class="n"><span id="pren">00</span><em>%</em></div></div></div>
 </div>
 <div class="cur" id="cur" aria-hidden="true"><div class="dot"></div><div class="ring"></div></div>
@@ -295,6 +348,7 @@ html.loading{overflow:hidden}
   <a href="#who"><small>03</small>Who it's for</a>
   <a href="#process"><small>04</small>Process</a>
   <a href="#contact"><small>05</small>Contact</a>
+  <a href="#enquire"><small>06</small>Send the brief</a>
   <p class="mono">hishran@wealthlymedia.com · 437-436-9417</p>
 </nav>
 
@@ -310,7 +364,7 @@ html.loading{overflow:hidden}
     <h1 class="display"><span class="line"><span class="w"><i>Filmed</i></span> <span class="w"><i>on</i></span> <span class="w"><i>location.</i></span></span><span class="line"><em><span class="w"><i>Made</i></span> <span class="w"><i>to</i></span> <span class="w"><i>be</i></span> <span class="w"><i>watched.</i></span></em></span></h1>
     <div class="hero-row">
       <p class="lede" data-rv>Brand films, social content and ad creative for high-end companies across York Region and Toronto. Shot at your place with your people, edited in-house, and yours to run anywhere.</p>
-      <a class="btn mag" href="#contact" data-rv>Start a conversation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+      <a class="btn mag" href="#enquire" data-rv>Start a conversation <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
     </div>
   </div>
   <div class="scroll mono" aria-hidden="true"><span>Scroll</span><i></i></div>
@@ -383,7 +437,7 @@ html.loading{overflow:hidden}
       <article class="panel"><i class="cm tl"></i><i class="cm tr"></i><i class="cm bl"></i><i class="cm br"></i><span class="mono idx">Hospitality</span><h3>Fine dining, hotels and venues</h3><p>The room at golden hour, the kitchen at full speed, the table before the first guest sits down.</p></article>
       <article class="panel"><i class="cm tl"></i><i class="cm tr"></i><i class="cm bl"></i><i class="cm br"></i><span class="mono idx">Retail and design</span><h3>Jewellers, showrooms and designers</h3><p>Work that only reads properly in motion, filmed the way it deserves to be seen.</p></article>
       <article class="panel"><i class="cm tl"></i><i class="cm tr"></i><i class="cm bl"></i><i class="cm br"></i><span class="mono idx">Private companies</span><h3>Established family and founder-owned firms</h3><p>Manufacturing, construction, logistics and professional services, filmed for the brand and for the people you want to hire.</p></article>
-      <article class="panel end"><h3 class="display">Sound like <em>your company?</em></h3><p>Tell us what's coming up.</p><a class="link" href="#contact" style="margin-top:22px">Start a conversation</a></article>
+      <article class="panel end"><h3 class="display">Sound like <em>your company?</em></h3><p>Tell us what's coming up.</p><a class="link" href="#enquire" style="margin-top:22px">Start a conversation</a></article>
     </div>
   </div>
 </section>
@@ -403,7 +457,7 @@ html.loading{overflow:hidden}
     </div>
     <div class="terms" data-rv>
       <p>Every project runs on a short written agreement. Half is paid when it's signed and half when the final files are delivered.</p>
-      <a class="link" href="#contact">Book the call</a>
+      <a class="link" href="#enquire">Book the call</a>
     </div>
   </div>
 </section>
@@ -421,7 +475,7 @@ html.loading{overflow:hidden}
     <div class="cgrid">
       <div>
         <p class="lede" data-rv>You'll hear back the same day. The plan and the price follow within one.</p>
-        <a class="btn mag" href="mailto:hishran@wealthlymedia.com" data-rv style="margin-top:34px">Email the studio <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+        <a class="btn mag" href="#enquire" data-rv style="margin-top:34px">Send us the brief <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
       </div>
       <div class="ways" data-rv>
         <div class="way"><span class="mono lab">Email</span><a class="val" id="email" href="mailto:hishran@wealthlymedia.com">hishran@wealthlymedia.com</a><button class="copy" type="button" data-copy="hishran@wealthlymedia.com" data-for="email" id="copy-email">Copy</button></div>
@@ -435,6 +489,48 @@ html.loading{overflow:hidden}
   <div class="in"><div class="foot"><a class="brand" href="#top"><i class="mk" aria-hidden="true"></i><span>Wealthly Media</span></a><p class="mono">Video production, filmed on location · Richmond Hill, Ontario · 2026</p></div></div>
 </section>
 </main>
+<section class="enq" id="enquire" aria-label="Send us the brief" aria-hidden="true">
+  <i class="cm tl"></i><i class="cm tr"></i><i class="cm bl"></i><i class="cm br"></i>
+  <div class="enq-in">
+    <div class="enq-top"><span class="mono">Enquiry · Scene 01 · Take 01</span><button class="enq-x" type="button" id="enqx" aria-label="Close">Close</button></div>
+    <div class="enq-grid">
+      <form class="enq-form" id="enqform" novalidate>
+        <h2 class="display">Tell us what's <em>coming up.</em></h2>
+        <p class="lede">A few lines is plenty. You'll hear back the same day, and the plan and the price follow within one.</p>
+        <div class="f2">
+          <label class="fld"><span class="mono">Your name</span><input type="text" name="name" id="f-name" autocomplete="name" required></label>
+          <label class="fld"><span class="mono">Company</span><input type="text" name="company" id="f-company" autocomplete="organization" required></label>
+        </div>
+        <div class="f2">
+          <label class="fld"><span class="mono">Email</span><input type="email" name="email" id="f-email" autocomplete="email" required></label>
+          <label class="fld"><span class="mono">Phone, optional</span><input type="tel" name="phone" id="f-phone" autocomplete="tel"></label>
+        </div>
+        <div class="f2">
+          <label class="fld"><span class="mono">Where you are</span><input type="text" name="city" id="f-city" placeholder="Vaughan, Markham, Toronto" autocomplete="address-level2"></label>
+          <label class="fld"><span class="mono">What fits</span><select name="package" id="f-package"><option value="">Not sure yet</option><option>Brand Film</option><option>Brand Launch</option><option>Monthly Content</option><option>Ad Creative Sprint</option><option>Launch</option><option>Event coverage</option><option>Recruiting film</option></select></label>
+        </div>
+        <label class="fld"><span class="mono">What's coming up</span><textarea name="brief" id="f-brief" rows="4" placeholder="A launch, a new location, hiring, a busy season" required></textarea></label>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
+        <div class="enq-actions">
+          <button class="btn rec" type="submit" id="enqsend"><i class="ring" aria-hidden="true"></i>Send the brief <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></button>
+          <span class="mono" id="enqmsg">Or email hishran@wealthlymedia.com</span>
+        </div>
+      </form>
+      <aside class="sheet" aria-live="polite">
+        <div class="sheet-head"><span>Call sheet</span><span id="s-status">Draft</span></div>
+        <dl>
+          <div><dt>Production</dt><dd id="s-company">Your company</dd></div>
+          <div><dt>Contact</dt><dd id="s-contact">Your name</dd></div>
+          <div><dt>Location</dt><dd id="s-city">Your place</dd></div>
+          <div><dt>Format</dt><dd id="s-package">To be decided</dd></div>
+          <div class="wide"><dt>The brief</dt><dd id="s-brief">What's coming up, in your words.</dd></div>
+        </dl>
+        <div class="sheet-foot"><span>Wealthly Media · Richmond Hill, Ontario</span><span id="s-date"></span></div>
+        <div class="stamp" id="stamp">Received</div>
+      </aside>
+    </div>
+  </div>
+</section>
 <div class="preview" id="preview" aria-hidden="true"><i class="cm"></i><i class="cm"></i><i class="cm"></i><i class="cm"></i><span class="mono">Wealthly Media</span><h4 id="pvt">The story of the company</h4></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
@@ -444,6 +540,7 @@ html.loading{overflow:hidden}
 (function(){
   var root=document.documentElement;
   var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.__expo={v:reduced?1:0.12};
   var fine=matchMedia('(pointer:fine)').matches&&!reduced;
   var G=window.gsap&&window.ScrollTrigger?window.gsap:null;
   if(G)G.registerPlugin(window.ScrollTrigger);
@@ -455,7 +552,7 @@ html.loading{overflow:hidden}
   var lenis=null;
   if(!reduced&&window.Lenis){
     try{
-      lenis=new window.Lenis({lerp:.09,smoothWheel:true});
+      lenis=new window.Lenis({lerp:.09,smoothWheel:true,prevent:function(node){return !!(node&&node.closest&&node.closest('#enquire'))}});
       if(G){lenis.on('scroll',ST.update);G.ticker.add(function(t){lenis.raf(t*1000)});}
       else{(function raf(t){lenis.raf(t);requestAnimationFrame(raf)})(0);}
     }catch(e){lenis=null}
@@ -466,7 +563,7 @@ html.loading{overflow:hidden}
   var menu=$('#menu'),mbtn=$('#mbtn');
   function closeMenu(){menu.classList.remove('open');mbtn.setAttribute('aria-expanded','false');mbtn.textContent='Menu';if(lenis)lenis.start();}
   mbtn.addEventListener('click',function(){var o=menu.classList.toggle('open');mbtn.setAttribute('aria-expanded',o?'true':'false');mbtn.textContent=o?'Close':'Menu';if(lenis){o?lenis.stop():lenis.start();}});
-  $$('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');if(id.length<2)return;var el=$(id);if(!el)return;e.preventDefault();closeMenu();go(el);});});
+  $$('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');if(id.length<2)return;if(id==='#enquire'){e.preventDefault();closeMenu();openEnq();return;}var el=$(id);if(!el)return;e.preventDefault();closeMenu();closeEnq(true);go(el);});});
 
   /* split a headline into masked words (keeps the italic spans) */
   function splitWords(el){
@@ -482,31 +579,38 @@ html.loading{overflow:hidden}
   var pre=$('#pre'),pren=$('#pren'),prebar=$('#prebar'),preline=$('#preline');
   var heroWords=$$('.hero h1 .w>i'),preWords=$$('.pre-word .w>i');
   function heroIn(){
-    if(!G){root.classList.add('in-all');return;}
+    if(!G){root.classList.add('in-all');window.__expo.v=1;return;}
     var tl=G.timeline({defaults:{ease:'expo.out'}});
-    tl.fromTo('#gl, .hero .fallback',{scale:1.14},{scale:1,duration:2.6,ease:'power3.out'},0)
+    tl.to(window.__expo,{v:1,duration:2.4,ease:'power2.out'},0)
+      .fromTo('#gl, .hero .fallback',{scale:1.16},{scale:1,duration:2.8,ease:'power3.out'},0)
+      .fromTo('.hero h1',{filter:'blur(14px)'},{filter:'blur(0px)',duration:1.6,ease:'power2.out'},0)
       .to(heroWords,{y:0,rotate:0,duration:1.5,stagger:.08},0)
       .to($$('.hero [data-rv]'),{opacity:1,y:0,duration:1.3,stagger:.14},.55)
       .fromTo($$('.hud > div'),{opacity:0,y:-10},{opacity:1,y:0,duration:1.1,stagger:.15},.4)
       .fromTo('.scroll',{opacity:0},{opacity:1,duration:1},1);
   }
-  if(reduced||!G){ if(pre)pre.parentNode.removeChild(pre); root.classList.add('js'); root.classList.add('in-all'); }
+  if(reduced||!G){ if(pre)pre.parentNode.removeChild(pre); root.classList.add('js'); root.classList.add('in-all'); window.__expo.v=1; }
   else{
     root.classList.add('js');root.classList.add('loading');
     if(lenis)lenis.stop();
     G.set(preWords,{y:0,yPercent:110,rotate:5});
+    var mark=$('#premark');
+    G.set(mark,{scale:.6,opacity:0,rotate:-20});
     var count={v:0},lines=['Loading the set','Checking the light','Rolling'],started=false;
     function startPre(){
       if(started)return;started=true;
+      var iris={s:1};
       var ptl=G.timeline({onComplete:function(){if(pre.parentNode)pre.parentNode.removeChild(pre);root.classList.remove('loading');if(lenis)lenis.start();}});
-      ptl.to(preWords,{yPercent:0,rotate:0,duration:1.5,stagger:.11,ease:'expo.out'},.1)
-         .fromTo('.pre-sub',{opacity:0},{opacity:.7,duration:1},1)
-         .to(count,{v:100,duration:2.1,ease:'power2.inOut',onUpdate:function(){var v=Math.round(count.v);pren.textContent=String(v).padStart(2,'0');prebar.style.transform='scaleX('+(v/100)+')';preline.textContent=lines[Math.min(2,Math.floor(v/34))];}},.3)
-         .to(preWords,{yPercent:-110,rotate:-4,duration:.8,stagger:.06,ease:'expo.in'},2.5)
-         .to(['.pre-top','.pre-sub','.pre-bot'],{opacity:0,duration:.5,ease:'power2.in'},2.65)
-         .add(function(){pre.classList.add('off')},3.0)
-         .to(pre,{yPercent:-101,duration:1.15,ease:'expo.inOut'},3.05)
-         .add(heroIn,3.35);
+      ptl.to(mark,{scale:1,opacity:1,rotate:0,duration:1.4,ease:'expo.out'},.05)
+         .to(preWords,{yPercent:0,rotate:0,duration:1.5,stagger:.11,ease:'expo.out'},.25)
+         .fromTo('.pre-sub',{opacity:0},{opacity:.7,duration:1},1.1)
+         .to(count,{v:100,duration:2.1,ease:'power2.inOut',onUpdate:function(){var v=Math.round(count.v);pren.textContent=String(v).padStart(2,'0');prebar.style.transform='scaleX('+(v/100)+')';preline.textContent=lines[Math.min(2,Math.floor(v/34))];}},.4)
+         .to(preWords,{yPercent:-110,rotate:-4,duration:.8,stagger:.06,ease:'expo.in'},2.6)
+         .to(['.pre-top','.pre-sub','.pre-bot'],{opacity:0,duration:.5,ease:'power2.in'},2.75)
+         .add(function(){pre.classList.add('off');pre.classList.add('iris');},3.1)
+         .to(iris,{s:34,duration:1.7,ease:'expo.inOut',onUpdate:function(){mark.style.transform='translate(0,0) scale('+iris.s+') rotate(0deg)';pre.style.setProperty('--r',(iris.s*50)+'px');}},3.15)
+         .to(mark,{opacity:0,duration:.5,ease:'power1.in'},4.25)
+         .add(heroIn,3.6);
     }
     /* wait for the type, not forever */
     var fontsIn=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve();
@@ -521,6 +625,7 @@ html.loading{overflow:hidden}
     $$('[data-split]').forEach(function(h){
       var ws=splitWords(h);
       G.set(ws,{y:0,yPercent:112,rotate:5});
+      G.fromTo(h,{filter:'blur(10px)'},{filter:'blur(0px)',duration:1.3,ease:'power2.out',scrollTrigger:{trigger:h,start:'top 88%',once:true}});
       G.to(ws,{yPercent:0,rotate:0,duration:1.4,stagger:.07,ease:'expo.out',scrollTrigger:{trigger:h,start:'top 88%',once:true}});
     });
     /* scroll reveals, staggered among siblings */
@@ -560,6 +665,51 @@ html.loading{overflow:hidden}
     /* hero drifts away as you leave it */
     G.to('.hero .in',{yPercent:22,opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
   }
+
+
+  /* enquiry page */
+  var enq=$('#enquire'),enqOpen=false,enqForm=$('#enqform'),enqMsg=$('#enqmsg'),enqBtn=$('#enqsend'),sheet=$('.sheet');
+  function openEnq(){if(enqOpen)return;enqOpen=true;enq.classList.add('open');enq.setAttribute('aria-hidden','false');root.classList.add('enq-open');if(lenis)lenis.stop();try{if(location.hash!=='#enquire')history.replaceState(null,'',location.pathname+location.search+'#enquire');}catch(e){}setTimeout(function(){var f=$('#f-name');if(f&&innerWidth>900)f.focus();},900);}
+  function closeEnq(silent){if(!enqOpen)return;enqOpen=false;enq.classList.remove('open');enq.setAttribute('aria-hidden','true');root.classList.remove('enq-open');if(lenis)lenis.start();if(!silent){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}}
+  $('#enqx').addEventListener('click',function(){closeEnq(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&enqOpen)closeEnq(false)});
+  if(location.hash==='#enquire'){setTimeout(openEnq,reduced?0:4600);}
+  /* the call sheet fills in as you type */
+  var sd=new Date();$('#s-date').textContent=sd.toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'});
+  function hot(el){el.classList.add('hot');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('hot')},600);}
+  function fill(){
+    var v=function(id){return ($('#'+id).value||'').trim()};
+    var name=v('f-name'),co=v('f-company'),em=v('f-email'),ph=v('f-phone'),city=v('f-city'),pk=$('#f-package').value,br=v('f-brief');
+    var set=function(id,val,dflt){var el=$('#'+id);var nv=val||dflt;if(el.textContent!==nv){el.textContent=nv;hot(el);}};
+    set('s-company',co,'Your company');
+    set('s-contact',[name,em,ph].filter(Boolean).join(' · '),'Your name');
+    set('s-city',city,'Your place');
+    set('s-package',pk,'To be decided');
+    set('s-brief',br,"What's coming up, in your words.");
+  }
+  $$('#enqform input, #enqform select, #enqform textarea').forEach(function(f){f.addEventListener('input',fill);f.addEventListener('change',fill);f.addEventListener('input',function(){f.closest('.fld')&&f.closest('.fld').classList.remove('bad')});});
+  enqForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var bad=false;
+    $$('#enqform [required]').forEach(function(f){var ok=f.value.trim()&&(f.type!=='email'||/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.value));f.closest('.fld').classList.toggle('bad',!ok);if(!ok)bad=true;});
+    if(bad){enqMsg.textContent='Fill in the lines marked in red and try again.';return;}
+    if($('#enqform [name=_honey]').value)return;
+    var d={};$$('#enqform input, #enqform select, #enqform textarea').forEach(function(f){if(f.name&&f.name!=='_honey')d[f.name]=f.value.trim()});
+    var subject='Enquiry from '+(d.company||d.name)+(d.package?' · '+d.package:'');
+    var bodyLines=['Name: '+d.name,'Company: '+d.company,'Email: '+d.email,'Phone: '+(d.phone||''),'Where: '+(d.city||''),'What fits: '+(d.package||'Not sure yet'),'','What is coming up:',d.brief];
+    var mailto='mailto:hishran@wealthlymedia.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(bodyLines.join('\n'));
+    enqBtn.classList.add('busy');enqBtn.disabled=true;enqMsg.textContent='Sending';$('#s-status').textContent='Sending';
+    var payload=Object.assign({},d,{_subject:subject,_template:'table',_captcha:'false',_replyto:d.email});
+    var done=function(ok){
+      enqBtn.classList.remove('busy');
+      if(ok){enqBtn.classList.add('sent');enqBtn.textContent='Sent';sheet.classList.add('done');$('#s-status').textContent='Received';enqMsg.textContent="Got it. You'll hear back today.";}
+      else{enqBtn.disabled=false;$('#s-status').textContent='Draft';enqMsg.innerHTML='Couldn\'t send from here. <a href="'+mailto+'">Open it in your email</a> instead, or write to hishran@wealthlymedia.com.';}
+    };
+    var timer=setTimeout(function(){done(false)},12000);
+    fetch('https://formsubmit.co/ajax/hishran@wealthlymedia.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){return r.json()}).then(function(j){clearTimeout(timer);done(!!(j&&(j.success==='true'||j.success===true)));})
+      .catch(function(){clearTimeout(timer);done(false)});
+  });
 
   /* top bar hides on the way down */
   var bar=$('#topbar'),lastY=0;
@@ -607,7 +757,7 @@ html.loading{overflow:hidden}
     var gl=cv.getContext('webgl',{antialias:false,alpha:false,powerPreference:'low-power'});
     if(!gl){cv.remove();return;}
     var vs='attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
-    var fs='precision highp float;uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;uniform float u_scroll;'+
+    var fs='precision highp float;uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;uniform float u_scroll;uniform float u_expo;'+
       'vec2 hash(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return -1.0+2.0*fract(sin(p)*43758.5453123);}'+
       'float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);return mix(mix(dot(hash(i),f),dot(hash(i+vec2(1.,0.)),f-vec2(1.,0.)),u.x),mix(dot(hash(i+vec2(0.,1.)),f-vec2(0.,1.)),dot(hash(i+vec2(1.,1.)),f-vec2(1.,1.)),u.x),u.y);}'+
       'float fbm(vec2 p){float v=0.0,a=0.5;mat2 m=mat2(1.6,1.2,-1.2,1.6);for(int i=0;i<5;i++){v+=a*noise(p);p=m*p;a*=0.5;}return v;}'+
@@ -615,13 +765,13 @@ html.loading{overflow:hidden}
       'vec2 q=vec2(fbm(p+t),fbm(p+vec2(5.2,1.3)-t*0.8));vec2 r=vec2(fbm(p+2.0*q+vec2(1.7,9.2)+t*0.5+m*0.6),fbm(p+2.0*q+vec2(8.3,2.8)-t*0.4));float n=fbm(p+2.2*r);'+
       'vec3 bg=vec3(0.043,0.039,0.031);vec3 deep=vec3(0.29,0.21,0.10);vec3 gold=vec3(0.729,0.588,0.349);vec3 ivory=vec3(0.92,0.91,0.88);'+
       'vec3 col=mix(bg,deep,smoothstep(0.05,0.55,n));col=mix(col,gold,smoothstep(0.3,0.8,n)*0.8*smoothstep(0.0,0.9,length(q)));col+=ivory*pow(smoothstep(0.6,0.96,n),3.0)*0.4;'+
-      'float vig=smoothstep(1.3,0.3,length(uv*vec2(0.85,1.15)));col*=mix(0.5,1.0,vig);gl_FragColor=vec4(col,1.0);}';
+      'float vig=smoothstep(1.3,0.3,length(uv*vec2(0.85,1.15)));col*=mix(0.5,1.0,vig)*u_expo;gl_FragColor=vec4(col,1.0);}';
     function sh(t,s){var o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS)){throw new Error(gl.getShaderInfoLog(o))}return o;}
     var prog;
     try{prog=gl.createProgram();gl.attachShader(prog,sh(gl.VERTEX_SHADER,vs));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(prog);gl.useProgram(prog);}catch(e){cv.remove();return;}
     var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
     var a=gl.getAttribLocation(prog,'a');gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);
-    var uR=gl.getUniformLocation(prog,'u_res'),uT=gl.getUniformLocation(prog,'u_time'),uM=gl.getUniformLocation(prog,'u_mouse'),uS=gl.getUniformLocation(prog,'u_scroll');
+    var uR=gl.getUniformLocation(prog,'u_res'),uT=gl.getUniformLocation(prog,'u_time'),uM=gl.getUniformLocation(prog,'u_mouse'),uS=gl.getUniformLocation(prog,'u_scroll'),uE=gl.getUniformLocation(prog,'u_expo');
     var scale=innerWidth<760?.5:.6,W=0,H=0,smx=.5,smy=.5,vis=true,last=0;
     function size(){W=Math.max(2,Math.floor(hero.clientWidth*scale));H=Math.max(2,Math.floor(hero.clientHeight*scale));cv.width=W;cv.height=H;gl.viewport(0,0,W,H);}
     size();addEventListener('resize',size);
@@ -629,7 +779,7 @@ html.loading{overflow:hidden}
     if(fine){addEventListener('mousemove',function(e){smx+=((e.clientX/innerWidth)-smx)*.05;smy+=((1-e.clientY/innerHeight)-smy)*.05},{passive:true});}
     var start=performance.now();
     function frame(now){
-      if(vis&&!document.hidden&&now-last>(reduced?1e9:30)){last=now;gl.uniform2f(uR,W,H);gl.uniform1f(uT,(now-start)/1000);gl.uniform2f(uM,smx,smy);gl.uniform1f(uS,(window.scrollY||0)/Math.max(1,innerHeight));gl.drawArrays(gl.TRIANGLE_STRIP,0,4);}
+      if(vis&&!document.hidden&&now-last>(reduced?1e9:30)){last=now;gl.uniform2f(uR,W,H);gl.uniform1f(uT,(now-start)/1000);gl.uniform2f(uM,smx,smy);gl.uniform1f(uS,(window.scrollY||0)/Math.max(1,innerHeight));gl.uniform1f(uE,window.__expo.v);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);}
       if(!reduced)requestAnimationFrame(frame);
     }
     frame(performance.now());
